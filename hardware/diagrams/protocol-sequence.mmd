@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant R as Remote (table 3)
+    participant X as Receiver
+    Note over R: button press, debounce, seq=17, epoch=5
+    R->>X: CALL (5,17)
+    X--xR: radio ACK lost
+    Note over R: no radio ACK, backoff 60..180 ms
+    R->>X: CALL (5,17) same seq
+    X-->>R: radio auto-ACK
+    Note over X: first copy was also received earlier: DUPLICATE
+    X->>R: CALL_ACCEPTED (duplicate, no new entry)
+    Note over R: matching (table,epoch,seq): accepted, LED 1 s solid
+    loop every 8 s up to 300 s
+        R->>X: STATUS_REQ (5,17)
+        X->>R: CALL_ACCEPTED (still pending)
+    end
+    Note over X: staff press ACK, oldest call marked served
+    X->>R: CALL_SERVED (best effort)
+    R->>X: STATUS_REQ (5,17)
+    X->>R: CALL_SERVED
+    Note over R: LED 3 slow blinks, polling stops
+    Note over X: receiver reboots: restore table from EEPROM
+    R->>X: STATUS_REQ (call lost in the save window)
+    X->>R: ERROR (unknown call)
+    R->>X: CALL (5,17) re-sent, same seq
+    X->>R: CALL_ACCEPTED (new)

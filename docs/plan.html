@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Restaurant Calling Bell Plan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#fbf8f3; --surface:#ffffff; --fg:#241f33; --muted:#6b6580; --line:#e6dfd2; --code:#f3eee4;
+  --amber-bg:#fff3d6; --amber-fg:#8a5200; --teal-bg:#d9f5f3; --teal-fg:#0b6463;
+  --violet-bg:#ece4fd; --violet-fg:#5223a8; --green-bg:#dcf5e4; --green-fg:#12653a;
+  --red-bg:#fde3e3; --red-fg:#9b1c1c; --pink-bg:#fde1ee; --pink-fg:#a1205f; --accent:#7c3aed;
+  --display:'Bricolage Grotesque','Trebuchet MS',sans-serif; --body:'DM Sans','Segoe UI',sans-serif; --mono:'JetBrains Mono',Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#16131f; --surface:#211d2e; --fg:#f1edf9; --muted:#a39db8; --line:#35304a; --code:#2a2540;
+  --amber-bg:#3a2a0b; --amber-fg:#fbbf4a; --teal-bg:#0c3333; --teal-fg:#5fe0dd; --violet-bg:#2c1f50; --violet-fg:#b99bff;
+  --green-bg:#0f3320; --green-fg:#6fe39a; --red-bg:#471616; --red-fg:#ff9a9a; --pink-bg:#451632; --pink-fg:#ff8fc2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16131f; --surface:#211d2e; --fg:#f1edf9; --muted:#a39db8; --line:#35304a; --code:#2a2540;
+  --amber-bg:#3a2a0b; --amber-fg:#fbbf4a; --teal-bg:#0c3333; --teal-fg:#5fe0dd; --violet-bg:#2c1f50; --violet-fg:#b99bff;
+  --green-bg:#0f3320; --green-fg:#6fe39a; --red-bg:#471616; --red-fg:#ff9a9a; --pink-bg:#451632; --pink-fg:#ff8fc2; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding:32px max(16px,env(safe-area-inset-left,0px)) 64px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;margin:0;text-wrap:balance}
+h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:800} h2{font-size:1.6rem;font-weight:800;margin-bottom:8px} h3{font-size:1.1rem;font-weight:600;margin:18px 0 8px}
+p{margin:0 0 12px;max-width:70ch} code{font-family:var(--mono);font-size:.86em;background:var(--code);padding:1px 6px;border-radius:5px}
+a{color:var(--accent)}
+.hero{background:linear-gradient(120deg,var(--amber-bg),var(--violet-bg) 55%,var(--teal-bg));border-radius:20px;padding:28px;display:grid;gap:12px}
+.hero p{color:var(--muted);font-size:1.05rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--mono);font-size:.78rem;padding:4px 10px;border-radius:99px;font-weight:600}
+.t-a{background:var(--amber-bg);color:var(--amber-fg)}.t-t{background:var(--teal-bg);color:var(--teal-fg)}.t-v{background:var(--violet-bg);color:var(--violet-fg)}
+.t-g{background:var(--green-bg);color:var(--green-fg)}.t-r{background:var(--red-bg);color:var(--red-fg)}.t-p{background:var(--pink-bg);color:var(--pink-fg)}
+section{margin-top:48px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
+.card ul,ul.l{margin:0;padding-left:20px}.card li,ul.l li{margin-bottom:5px}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--code);white-space:nowrap}
+tr:last-child td{border-bottom:0} td:first-child{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.note{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.95rem}.n-w{background:var(--red-bg);color:var(--red-fg)}.n-i{background:var(--green-bg);color:var(--green-fg)}.n-a{background:var(--amber-bg);color:var(--amber-fg)}
+.pre{font-family:var(--mono);font-size:.8rem;background:var(--code);border-radius:12px;padding:14px;overflow-x:auto;white-space:pre;line-height:1.5;margin:12px 0}
+.flow{display:grid;gap:10px;grid-template-columns:1fr auto 1fr;align-items:stretch}
+.node{border-radius:14px;padding:16px}.b-a{background:var(--amber-bg)}.b-t{background:var(--teal-bg)}
+.arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);font-size:.74rem;color:var(--violet-fg);text-align:center}
+@media(max-width:700px){.flow{grid-template-columns:1fr}}
+footer{margin-top:48px;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div class="tags"><span class="tag t-a">10 table remotes</span><span class="tag t-t">1 counter receiver</span><span class="tag t-v">SI24R1 2.4 GHz</span><span class="tag t-p">OLED + voice</span></div>
+  <h1>Restaurant Calling Bell: full plan</h1>
+  <p>A guest presses one button; the counter shows the table number on an OLED, says "Table 3 is calling for service", repeats until staff press ACK, and the table's remote knows its call was received. Built on ATmega328P + SI24R1, open source, designed for your own PCB layout in EasyEDA Pro.</p>
+  <p><b>Where it stands (2026-10-29):</b> firmware written and compiling, protocol tested in software, parts looked up on LCSC. <b>No hardware has been powered yet.</b> Repo: <a href="https://github.com/ElectroIoT/Restaurant-Calling-Bell">github.com/ElectroIoT/Restaurant-Calling-Bell</a>.</p>
+</div>
+
+<section>
+  <h2>1. How it works</h2>
+  <div class="flow">
+    <div class="node b-a"><h3>Table remote</h3><p>ATmega328P + SI24R1, CR2450 or 2xAAA. Sleeps at about 3 uA (estimate). Press: call, retries with the same sequence number, waits for the receiver's reply, lights solid on success, flashes 5 times on failure.</p></div>
+    <div class="arrow"><span>CALL</span><b>&rarr;</b><b>&larr;</b><span>CALL_ACCEPTED</span></div>
+    <div class="node b-t"><h3>Counter receiver</h3><p>ATmega328P + SI24R1 + SSD1306 + DFPlayer Mini. Always listening. Validates, stores, replies, shows, announces, repeats every 30 s until ACK. Pending calls survive a power cut.</p></div>
+  </div>
+  <div class="note n-i"><b>Why this is more reliable than "radio ACK":</b> the radio's automatic ACK only says a radio heard the frame. This design sends a separate reply from the receiver <i>firmware</i> after it recorded the call, and the remote counts the call as accepted only on that reply. A lost reply makes the remote retry; the receiver recognises the retry (same table, epoch, sequence) and answers again without creating a second entry.</div>
+</section>
+
+<section>
+  <h2>2. What is built and what is not</h2>
+  <div class="scroll"><table>
+    <tr><th>Item</th><th>Status</th><th>Evidence / next step</th></tr>
+    <tr><td>Protocol + call table + retry engine + EEPROM ring</td><td><span class="tag t-g">tested in software</span></td><td>476 host checks, 10-remote lossy-channel simulation, all pass</td></tr>
+    <tr><td>Remote firmware</td><td><span class="tag t-g">compiles</span></td><td>about 17 % flash, 3 % RAM; Uno prototype and 4 MHz PCB targets</td></tr>
+    <tr><td>Receiver firmware</td><td><span class="tag t-g">compiles</span></td><td>42 % flash, 48 % RAM on the PCB target</td></tr>
+    <tr><td>Radio driver on a real SI24R1</td><td><span class="tag t-r">not tested</span></td><td>first hardware task: two Unos, tests 2-9</td></tr>
+    <tr><td>DFPlayer + OLED code</td><td><span class="tag t-r">not tested</span></td><td>DFPlayer command numbers and pin order need checking against your module</td></tr>
+    <tr><td>Voice files</td><td><span class="tag t-r">none included</span></td><td>record 14 files (list in docs/audio-guide.md) or generate placeholders with tools/make_audio_windows.ps1</td></tr>
+    <tr><td>PCBs</td><td><span class="tag t-a">yours, in EasyEDA Pro</span></td><td>netlist, BOM (LCSC numbers), placement hints and footprint checks are in hardware/*/easyeda and docs/easyeda-guide.md. KiCad boards are only a reference.</td></tr>
+    <tr><td>Range, battery life, reliability</td><td><span class="tag t-r">not measured</span></td><td>estimates only; test plan below</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <h2>3. Hardware plan</h2>
+  <div class="grid">
+    <div class="card"><h3>Remote board</h3><ul>
+      <li>ATmega328P-AU, 4 MHz from the 8 MHz RC (fuse CKDIV8 + /2 in firmware): rated down to 1.8 V</li>
+      <li>SI24R1 module at the board edge, antenna hanging off the edge</li>
+      <li>CALL tact switch + 2-pin header for a big panel button; red LED</li>
+      <li>Supply direct from CR2450 <i>or</i> 2xAAA, no regulator</li>
+      <li>100 nF + 22 uF at the radio, ceramic only</li>
+      <li>470 k external pull-up: stuck button costs about 6 uA</li>
+      <li>ISP header, test points, 4 mounting holes</li>
+      <li>4 x 0 ohm jumpers to choose holder polarity</li></ul></div>
+    <div class="card"><h3>Receiver board</h3><ul>
+      <li>ATmega328P-AU, 8 MHz crystal, 3.3 V logic</li>
+      <li>USB-C power only, PTC, TVS, AP2112K-3.3 LDO</li>
+      <li>SI24R1 module at the edge, antenna clear</li>
+      <li>0.96in SSD1306 OLED header, 3 buttons (ACK, CLEAR, MUTE) + reset</li>
+      <li>DFPlayer Mini sockets (5 V), speaker screw terminal, active buzzer</li>
+      <li>DFPlayer on the hardware UART, ISP programming</li>
+      <li>5 V bulk 220 uF + 2 x 10 uF for speaker peaks</li></ul></div>
+    <div class="card"><h3>Power facts to respect</h3><ul>
+      <li>Radio 1.9-3.6 V: never fresh lithium AAA (3.6 V)</li>
+      <li>12 mA TX pulses at 0 dBm, 16 mA at 4 dBm</li>
+      <li>ATmega328P: 8 MHz needs 2.7 V, 4 MHz works to 1.8 V</li>
+      <li>No charger on a primary cell, ever</li>
+      <li>Speaker: start at volume 20, check the amplifier temperature</li></ul></div>
+  </div>
+  <h3>Pin map (same on Uno prototype and remote PCB)</h3>
+  <div class="scroll"><table>
+    <tr><th>Signal</th><th>Pin</th><th>Notes</th></tr>
+    <tr><td>SCK / MISO / MOSI</td><td>D13 / D12 / D11</td><td>hardware SPI</td></tr>
+    <tr><td>CSN / CE / IRQ</td><td>D10 / D9 / D2</td><td>IRQ wired but unused</td></tr>
+    <tr><td>Remote CALL / LED</td><td>D4 / D5</td><td>D4 wakes from sleep (pin change)</td></tr>
+    <tr><td>Receiver OLED</td><td>A4 / A5</td><td>I2C 0x3C</td></tr>
+    <tr><td>Receiver ACK / CLEAR / MUTE</td><td>D4 / D5 / D6</td><td>internal pull-ups</td></tr>
+    <tr><td>Receiver buzzer / BUSY</td><td>D3 / A0</td><td>buzzer through an NPN</td></tr>
+    <tr><td>DFPlayer</td><td>PCB: D0/D1 hardware UART; Uno: D7/D8</td><td>1 k in the MCU-to-DFPlayer line</td></tr>
+  </table></div>
+  <p>Full tables with connectors: <code>hardware/diagrams/wiring.md</code>.</p>
+</section>
+
+<section>
+  <h2>4. Parts list (LCSC, 0805 passives)</h2>
+  <p>All passives are 0805 as you asked (one 1206 PTC fuse). Looked up on lcsc.com with the browser on 2026-10-29; stock and price change. Prices are USD at the tier shown on LCSC and exclude shipping, tax and PCB fabrication.</p>
+  <div class="scroll"><table>
+    <tr><th>Part</th><th>LCSC</th><th>MPN</th><th>Used on</th><th>Unit USD</th><th>Check</th></tr>
+    <tr><td>MCU TQFP-32</td><td>C14877</td><td>ATMEGA328P-AU</td><td>both</td><td>2.32</td><td>16,356 in stock</td></tr>
+    <tr><td>100 nF 0805</td><td>C1711</td><td>CL21B104KBCNNNC</td><td>both</td><td>0.014</td><td>ok</td></tr>
+    <tr><td>10 uF 25 V 0805</td><td>C15850</td><td>CL21A106KAYNNNE</td><td>both</td><td>0.044</td><td>ok</td></tr>
+    <tr><td>22 uF 6.3 V 0805</td><td>C5674</td><td>CL21A226MQQNNNE</td><td>both</td><td>0.045</td><td>ok</td></tr>
+    <tr><td>10 nF 0805</td><td>C1710</td><td>CL21B103KBANNNC</td><td>remote</td><td>0.012</td><td>ok</td></tr>
+    <tr><td>18 pF NP0 0805</td><td>C113825</td><td>CC0805JRNPO9BN180</td><td>receiver</td><td>0.012</td><td>Samsung equivalent had 0 stock</td></tr>
+    <tr><td>Resistors 0805: 0R, 1k, 4.7k, 5.1k, 10k, 470k</td><td>C17477, C17513, C17673, C27834, C17414, C17709</td><td>0805W8F....T5E</td><td>both</td><td>0.003-0.006</td><td>ok</td></tr>
+    <tr><td>LED 0805 red / green</td><td>C2295 / C2297</td><td>KT-0805R / KT-0805G</td><td>remote / receiver</td><td>0.011 / 0.017</td><td>ok</td></tr>
+    <tr><td>Tact switch 5.1 mm</td><td>C318884</td><td>TS-1187A-B-A-B</td><td>both</td><td>0.021</td><td>ok</td></tr>
+    <tr><td>CR2450 holder SMT</td><td>C964845</td><td>MY-2450-01</td><td>remote</td><td>0.19</td><td><span class="tag t-a">polarity unknown: measure</span></td></tr>
+    <tr><td>3.3 V LDO</td><td>C51118</td><td>AP2112K-3.3TRG1</td><td>receiver</td><td>0.18</td><td>2,220 in stock</td></tr>
+    <tr><td>USB-C 16 pin</td><td>C165948</td><td>TYPE-C-31-M-12</td><td>receiver</td><td>0.17</td><td>ok</td></tr>
+    <tr><td>TVS 5 V SOD-123FL</td><td>C193402</td><td>SMF5.0A (MDD)</td><td>receiver</td><td>0.028</td><td>ok</td></tr>
+    <tr><td>PTC 1.1 A 1206</td><td>C126818</td><td>1206L110THYR</td><td>receiver</td><td>0.03</td><td><span class="tag t-r">other supplier, not LCSC stock</span></td></tr>
+    <tr><td>Crystal 8 MHz 3225</td><td>C2905353</td><td>XC32M4-8.000-F18LJDT</td><td>receiver</td><td>0.19</td><td><span class="tag t-a">confirm 18 pF load</span></td></tr>
+    <tr><td>NPN SOT-23</td><td>C81464</td><td>MMBT3904LT1G</td><td>receiver</td><td>0.017</td><td>ok</td></tr>
+    <tr><td>Active buzzer 12 mm</td><td>C96093</td><td>TMB12A05</td><td>receiver (optional)</td><td>0.20</td><td>ok</td></tr>
+    <tr><td>220 uF 16 V SMD</td><td>C2887273</td><td>RVT220UF16V67RV0015</td><td>receiver</td><td>0.035</td><td><span class="tag t-a">confirm body size</span></td></tr>
+    <tr><td>Headers / sockets / terminal</td><td>C56153599, C492401, C2897371, C2897367, C474881</td><td>2x3, 1x2, 1x8, 1x4, KF301-5.0-2P</td><td>both</td><td>0.02-0.15</td><td>ok</td></tr>
+  </table></div>
+  <div class="note n-a"><b>Cost, LCSC parts only, quantity-tier prices:</b> remote about <b>$2.76</b> each (<b>$27.64</b> for ten), receiver about <b>$3.95</b>, whole system about <b>$31.6</b>. Not included: the SI24R1 modules, DFPlayer Mini, OLED, speaker, coin cells, microSD card, USB charger, enclosure, PCB fabrication, shipping. Full CSV with substitutes: <code>hardware/*/bom/*.csv</code>, summary in <code>hardware/bom/BOM-SUMMARY.md</code>.</div>
+</section>
+
+<section>
+  <h2>5. Protocol in one screen</h2>
+  <div class="pre">packet (8 bytes): [ver|type][table][seq][epoch][status][battery x20mV][flags][crc8]
+types: 1 CALL  2 CALL_ACCEPTED  3 CALL_SERVED  4 ERROR  5 STATUS_REQ
+addresses: receiver "REST1"   remote n "TAB01".."TAB10"     channel 76 (2476 MHz), 250 kbps, 0 dBm
+
+remote:   CALL(seq=17) ... no reply in 40 ms ... backoff 60..180 ms ... CALL(seq=17) again (max 8)
+receiver: same (table, epoch, seq) = duplicate: reply again, never a second entry
+          new call: store, show, announce, reply ACCEPTED, then save to EEPROM
+remote:   after ACCEPTED sleeps; every 8 s for 5 min asks STATUS_REQ; blinks 3x on SERVED;
+          UNKNOWN_CALL (receiver lost it in a power cut) = re-send the same call</div>
+  <p>Details, state machines and the Mermaid diagrams: <code>docs/wireless-protocol.md</code>, <code>hardware/diagrams/*.mmd</code>.</p>
+</section>
+
+<section>
+  <h2>6. Build and test order</h2>
+  <div class="scroll"><table>
+    <tr><th>Phase</th><th>What</th><th>Status</th></tr>
+    <tr><td>1</td><td>Environment, datasheets, library review</td><td><span class="tag t-g">done</span></td></tr>
+    <tr><td>2</td><td>Radio driver choice, power facts, compatibility notes</td><td><span class="tag t-g">done (hardware check pending)</span></td></tr>
+    <tr><td>3</td><td>Architecture and protocol</td><td><span class="tag t-g">done</span></td></tr>
+    <tr><td>4</td><td>Two-radio proof of concept on 2 Unos</td><td><span class="tag t-r">your turn: tests 2-9</span></td></tr>
+    <tr><td>5</td><td>Remote and receiver firmware</td><td><span class="tag t-g">written, compiles</span></td></tr>
+    <tr><td>6</td><td>OLED, buzzer, DFPlayer on the bench</td><td><span class="tag t-r">test 10</span></td></tr>
+    <tr><td>7</td><td>PCB layout in EasyEDA Pro</td><td><span class="tag t-a">yours</span></td></tr>
+    <tr><td>8</td><td>BOMs, wiring, assembly, test plans</td><td><span class="tag t-g">done</span></td></tr>
+    <tr><td>9</td><td>Automated tests, 22 builds</td><td><span class="tag t-g">done</span></td></tr>
+    <tr><td>10</td><td>Hardware tests, then fabrication</td><td><span class="tag t-r">open</span></td></tr>
+  </table></div>
+  <p>The 20-test plan with pass criteria is in <code>docs/test-plan.md</code>; results go in <code>tests/test-results-template.csv</code>. Do not order PCBs before tests 1-11 pass on the prototype and test 12 (battery sag) decides CR2450 or 2xAAA.</p>
+</section>
+
+<section>
+  <h2>7. My advice</h2>
+  <div class="grid">
+    <div class="card"><span class="tag t-r">1. Battery</span><p style="margin-top:8px">Fit <b>2 x AAA</b> unless your sag measurement shows the CR2450 stays above 2.2 V during a 12 mA pulse. The estimate says a CR2450 is fine when fresh but loses its last part of capacity to voltage sag, and an AAA pair has far lower internal resistance. The PCB takes either on the same rail.</p></div>
+    <div class="card"><span class="tag t-r">2. Prototype first</span><p style="margin-top:8px">Run two Uno boards and two modules until tests 2-9 pass. Many SI24R1 modules need a separate 3.3 V source with 22 uF at the pins; flaky links are almost always supply noise.</p></div>
+    <div class="card"><span class="tag t-r">3. Antenna</span><p style="margin-top:8px">Hang the module's antenna end off the PCB edge and keep the coin holder, battery, metal case and speaker wires 10 mm away. A detuned antenna looks like "short range".</p></div>
+    <div class="card"><span class="tag t-a">4. Real hardware checks before layout</span><p style="margin-top:8px">Measure your DFPlayer (row spacing, pin order), OLED (pin order), the SI24R1 module pad pitch and the holder polarity. The footprints in the guide are from drawings and from memory.</p></div>
+    <div class="card"><span class="tag t-a">5. Guest button</span><p style="margin-top:8px">A bigger button is a better guest experience: use the EXT BUTTON header and a panel-mount button in a table stand. Keep the PCB switch for testing.</p></div>
+    <div class="card"><span class="tag t-a">6. Voice</span><p style="margin-top:8px">Record the 14 files in a real voice at consistent volume; one 1.5 s announcement is easier to understand than a long sentence in a noisy restaurant. Keep the repeat interval long enough that staff are not nagged (30 s default, 5 repeats).</p></div>
+    <div class="card"><span class="tag t-a">7. Channel and Wi-Fi</span><p style="margin-top:8px">Default channel 76 (2476 MHz) sits above Wi-Fi channels 1/6/11. A router on channel 13 overlaps it. Check with a Wi-Fi analyser at the venue and change <code>BELL_CHANNEL</code> if test 15 fails.</p></div>
+    <div class="card"><span class="tag t-a">8. Power cuts</span><p style="margin-top:8px">The receiver restores pending calls from EEPROM. Add a small USB power bank in line if the restaurant has frequent cuts.</p></div>
+    <div class="card"><span class="tag t-g">9. Later ideas</span><p style="margin-top:8px">An ESP32 bridge on the receiver's spare UART could forward calls to RestoProERP or a phone. Keep it out of v1: it adds a failure mode to the part that must never fail.</p></div>
+    <div class="card"><span class="tag t-g">10. Compliance</span><p style="margin-top:8px">0 dBm on 2.4 GHz is normally licence-free, but check your country's rules for the module you buy. Do not sell units without checking.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>8. Risks that can still bite</h2>
+  <ul class="l">
+    <li><b>Unproven on hardware:</b> radio driver, DFPlayer commands, OLED, sleep current, range.</li>
+    <li><b>Coin cell sag</b> at end of life can reset the remote or stop the radio.</li>
+    <li><b>Footprint assumptions</b> (DFPlayer spacing, holder polarity, crystal load capacitance, 220 uF body size, PTC and 1N4148W availability).</li>
+    <li><b>Save window:</b> a power cut within about 10-50 ms after a reply can lose a call; the remote's polling recovers it, but only while polling is on.</li>
+    <li><b>Two remotes with the same table id</b> answer each other's replies: label and verify each unit.</li>
+  </ul>
+</section>
+
+<footer>Plan generated 2026-10-29 from the repository state. Nothing in it is a measured result unless it says so.</footer>
+</div>
+</body>
+</html>

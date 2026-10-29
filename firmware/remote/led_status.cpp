@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "config.h"
 #include "led_status.h"
+#include "power_manager.h"
 
 static uint32_t g_last_toggle;
 static bool g_state;
@@ -40,7 +41,7 @@ static void blink(uint8_t n, uint16_t on_ms, uint16_t off_ms)
 void led_success(void)
 {
     digitalWrite(PIN_LED, HIGH);
-    delay(LED_SUCCESS_MS);
+    pm_sleep_ms(LED_SUCCESS_MS);                 /* pin stays driven while the MCU sleeps */
     led_off();
 }
 

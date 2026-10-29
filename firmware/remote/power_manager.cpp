@@ -84,6 +84,32 @@ static void deep_sleep(void)
     power_spi_enable();
 }
 
+void pm_sleep_ms(uint16_t ms)
+{
+    static const struct { uint16_t ms; uint8_t bits; } steps[] = {
+        {1000, (1 << WDP2) | (1 << WDP1)}, {500, (1 << WDP2) | (1 << WDP0)}, {250, (1 << WDP2)},
+        {120, (1 << WDP1) | (1 << WDP0)}, {60, (1 << WDP1)}, {30, (1 << WDP0)}, {15, 0}
+    };
+    set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+    while (ms >= 15) {
+        uint8_t i = 0;
+        while (steps[i].ms > ms)
+            i++;
+        cli();
+        wdt_reset();
+        MCUSR &= ~(1 << WDRF);
+        WDTCSR |= (1 << WDCE) | (1 << WDE);
+        WDTCSR = (1 << WDIE) | steps[i].bits;          /* interrupt mode: wakes, does not reset */
+        sleep_enable();
+        sleep_bod_disable();
+        sei();
+        sleep_cpu();
+        sleep_disable();
+        wdt_disable();
+        ms = (uint16_t)(ms - steps[i].ms);
+    }
+}
+
 void pm_sleep_until_button(void)
 {
     wdt_reset();

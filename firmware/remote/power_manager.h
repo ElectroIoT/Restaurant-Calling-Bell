@@ -11,4 +11,7 @@ uint16_t pm_read_vcc_mv(void);
 void pm_sleep_until_button(void);
 /* Deep sleep for ~8 s (watchdog interrupt) or until the button changes level. */
 void pm_sleep_8s_or_button(void);
+/* Low-power replacement for delay(): power-down sleeping in watchdog steps (15 ms .. 1 s), no
+ * button wake-up. Output pins keep their state (so the LED can stay lit). Resolution ~15 ms. */
+void pm_sleep_ms(uint16_t ms);
 #endif

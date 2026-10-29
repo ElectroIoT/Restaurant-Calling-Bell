@@ -154,5 +154,5 @@ void loop()
     /* One long press = one call. Wait for release; a button held for BUTTON_STUCK_MS is
      * treated as stuck and ignored (a stuck button then draws only the pull-up current). */
     button_wait_release(BUTTON_STUCK_MS);
-    delay(BUTTON_LOCKOUT_MS);
+    pm_sleep_ms(BUTTON_LOCKOUT_MS);              /* lockout without keeping the MCU awake */
 }

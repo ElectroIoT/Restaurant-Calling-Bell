@@ -11,3 +11,12 @@ fp-info-cache
 # scratch downloads (LCSC datasheets etc.)
 datasheets-lcsc/
 tools/.zig/
+hardware/tools/_freerouting/
+hardware/tools/build_*.log
+hardware/*/kicad/*.dsn
+hardware/*/kicad/*.ses
+hardware/*/kicad/drc0.rpt
+hardware/*/kicad/*.kicad_prl
+hardware/*/kicad/fp-info-cache
+tests/protocol-tests/build/
+tools/audio-out/

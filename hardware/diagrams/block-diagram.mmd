@@ -1,0 +1,18 @@
+flowchart LR
+    subgraph T["Table remote x10 (CR2450 or 2xAAA)"]
+        B[CALL button + LED] --> M1[ATmega328P 4 MHz]
+        M1 <-->|SPI| R1[SI24R1 module]
+    end
+    subgraph C["Counter receiver (5 V USB-C)"]
+        R2[SI24R1 module] <-->|SPI| M2[ATmega328P 8 MHz]
+        M2 -->|I2C| O[SSD1306 OLED]
+        M2 -->|UART 9600| D[DFPlayer Mini + microSD]
+        D --> S[Speaker 4 ohm 3 W]
+        M2 --> Z[Active buzzer]
+        K[ACK / CLEAR / MUTE] --> M2
+        P[USB-C 5 V] --> L[AP2112K 3V3]
+        L --> M2
+        L --> R2
+        P --> D
+    end
+    R1 <-. "2.4 GHz, ch 76, 250 kbps" .-> R2

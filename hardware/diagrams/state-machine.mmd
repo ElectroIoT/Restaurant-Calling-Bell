@@ -1,0 +1,25 @@
+stateDiagram-v2
+    direction LR
+    state "Remote" as REM {
+        [*] --> Sleep
+        Sleep --> Debounce: button edge (pin-change IRQ)
+        Debounce --> Sleep: glitch (not still pressed)
+        Debounce --> Send: pressed 30 ms, seq++
+        Send --> WaitReply: radio ACK heard
+        Send --> Backoff: no radio ACK
+        WaitReply --> Done: reply matches (table, epoch, seq)
+        WaitReply --> Backoff: 40 ms timeout
+        Backoff --> Send: 60 + rand(120) ms
+        Backoff --> Failed: 8 attempts used
+        Done --> Poll: accepted
+        Failed --> Sleep: 5 rapid flashes
+        Poll --> Sleep: SERVED, 3 blinks / window over
+        Done --> Sleep: LED 1 s solid
+    }
+    state "Receiver pending-call table (per table)" as RX {
+        [*] --> None
+        None --> Pending: CALL (new epoch/seq)
+        Served --> Pending: CALL (new epoch/seq)
+        Pending --> Pending: CALL same seq = duplicate, new seq = repeat (keeps position)
+        Pending --> Served: ACK button / CLEAR hold 2 s
+    }

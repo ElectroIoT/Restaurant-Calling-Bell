@@ -1,0 +1,35 @@
+Refs,Qty,Component,Value,Package,MPN,Manufacturer,LCSC,Stock 2026-10-29,Unit USD,Price tier,Line USD,Need,Status,Substitutes / notes
+C1,1,220uF 16V aluminium electrolytic SMD,220uF 16V,CP_Elec_6.3x7.7,RVT220UF16V67RV0015,KNSCHA,C2887273,215560,0.0351,20+,0.04,Essential,verify,body size inferred from the '67' in the MPN (6.3x7.7?); confirm before layout is frozen; bulk for DFPlayer/speaker peaks
+C12,1,22uF 6.3V X5R 0805,22uF,C_0805_2012Metric,CL21A226MQQNNNE,Samsung,C5674,2820030,0.0445,10+,0.04,Essential,ok,any 22uF 0805 X5R >=6.3V; for 3V use 10V rating to limit DC-bias loss; TX/RX current pulses
+C2 C3 C13,3,10uF 25V X5R 0805,10uF 25V,C_0805_2012Metric,CL21A106KAYNNNE,Samsung,C15850,1698440,0.0441,20+,0.13,Essential,ok,any 10uF 0805 X5R >=16V; keep ceramic for the remote (leakage)
+C4 C5 C6 C7 C8 C11,6,100nF 50V X7R 0805,100nF,C_0805_2012Metric,CL21B104KBCNNNC,Samsung,C1711,1693260,0.0139,20+,0.08,Essential,ok,any 100nF 0805 X7R >=16V (e.g. Yageo CC0805KRX7R9BB104)
+C9 C10,2,18pF 50V NP0 5% 0805,18pF,C_0805_2012Metric,CC0805JRNPO9BN180,Yageo,C113825,81100,0.0122,50+,0.02,Essential,ok,any 18pF C0G/NP0 0805; Samsung CL21C180JBANNNC (C170109) showed 0 stock
+D1,1,TVS 5V SOD-123FL,SMF5.0A,D_SOD-123F,SMF5.0A,MDD,C193402,496940,0.0277,20+,0.03,Essential,ok,Littelfuse SMF5.0A C151296; Littelfuse SMF5.0A is C151296 at $0.1312
+D2,1,Green LED 0805,green,LED_0805_2012Metric,KT-0805G,Hubei KENTO,C2297,1381250,0.0166,50+,0.02,Essential,ok,any 0805 LED + re-check resistor
+F1,1,PTC resettable fuse 1.1A hold 1206,1.1A PTC,Fuse_1206_3216Metric,1206L110THYR,Littelfuse,C126818,0,0.0286,1+,0.03,Essential,verify,"listed under 'Other Suppliers' only (lead time 5-7 business days), not LCSC stock; confirm hold/trip rating and price"
+J1,1,USB Type-C 16P receptacle,USB-C 5V,USB_C_Receptacle_HRO_TYPE-C-31-M-12,TYPE-C-31-M-12,Korean Hroparts Elec,C165948,280995,0.1736,5+,0.17,Essential,ok,
+J3,1,Pin header 2x3 2.54mm,ISP,PinHeader_2x03_P2.54mm_Vertical,PZ254V-12-06P-T,XFCN,C56153599,1000,0.0240,20+,0.02,Essential,ok,
+J4,1,Female header 1x4 2.54mm,OLED SSD1306 I2C,PinSocket_1x04_P2.54mm_Vertical,PM254-1-04-Z-8.5,HCTL,C2897367,9395,0.1167,5+,0.12,Essential,ok,any 1x4 2.54mm female header; common 0.96in module order GND VCC SCL SDA - CHECK your module
+J6,1,Female header 1x8 2.54mm,DFPlayer left,PinSocket_1x08_P2.54mm_Vertical,PM254-1-08-Z-8.5,HCTL,C2897371,10248,0.1547,6+,0.15,Essential,ok,any 1x8 2.54mm female header
+J7,1,Female header 1x8 2.54mm,DFPlayer right,PinSocket_1x08_P2.54mm_Vertical,PM254-1-08-Z-8.5,HCTL,C2897371,10248,0.1547,6+,0.15,Essential,ok,any 1x8 2.54mm female header
+J8,1,Screw terminal 2P 5.0mm,SPEAKER 4R 3W,TerminalBlock_MaiXu_MX126-5.0-02P_1x02_P5.00mm,KF301-5.0-2P,Cixi Kefa,C474881,53450,0.1027,5+,0.10,Essential,ok,
+Q1,1,NPN 40V 200mA SOT-23,MMBT3904,SOT-23,MMBT3904LT1G,onsemi,C81464,1576650,0.0168,50+,0.02,Essential,ok,"any SOT-23 NPN (MMBT3904, S8050)"
+R1 R2,2,5.1k 1% 0805,5.1k,R_0805_2012Metric,0805W8F5101T5E,UNI-ROYAL,C27834,560700,0.0055,100+,0.01,Essential,ok,any 1% 0805 resistor
+R3 R7 R8,3,1k 1% 0805,1k,R_0805_2012Metric,0805W8F1001T5E,UNI-ROYAL,C17513,35589200,0.0035,100+,0.01,Essential,ok,any 1% 0805 resistor
+R4 R9,2,10k 1% 0805,10k,R_0805_2012Metric,0805W8F1002T5E,UNI-ROYAL,C17414,41045900,0.0034,100+,0.01,Essential,ok,any 1% 0805 resistor
+R5 R6,2,4.7k 1% 0805,4.7k,R_0805_2012Metric,0805W8F4701T5E,UNI-ROYAL,C17673,1255600,0.0039,100+,0.01,Essential,ok,any 1% 0805 resistor; many OLED modules already have pull-ups; fit if yours has none
+SW1,1,Tact switch 5.1x5.1mm SMD,RESET,SW_TS-1187A,TS-1187A-B-A-B,XKB Connection,C318884,875440,0.0208,20+,0.02,Essential,ok,any 5.1x5.1mm 4-pad SMD tact switch (footprint SW_TS-1187A)
+SW2,1,Tact switch 5.1x5.1mm SMD,ACK,SW_TS-1187A,TS-1187A-B-A-B,XKB Connection,C318884,875440,0.0208,20+,0.02,Essential,ok,any 5.1x5.1mm 4-pad SMD tact switch (footprint SW_TS-1187A)
+SW3,1,Tact switch 5.1x5.1mm SMD,CLEAR,SW_TS-1187A,TS-1187A-B-A-B,XKB Connection,C318884,875440,0.0208,20+,0.02,Essential,ok,any 5.1x5.1mm 4-pad SMD tact switch (footprint SW_TS-1187A)
+SW4,1,Tact switch 5.1x5.1mm SMD,MUTE,SW_TS-1187A,TS-1187A-B-A-B,XKB Connection,C318884,875440,0.0208,20+,0.02,Essential,ok,any 5.1x5.1mm 4-pad SMD tact switch (footprint SW_TS-1187A)
+U1,1,3.3V 600mA LDO SOT-23-5,AP2112K-3.3,SOT-23-5,AP2112K-3.3TRG1,Diodes Inc.,C51118,2220,0.1792,5+,0.18,Essential,ok,Tech Public AP2112K-3.3TRG1 clone C23380830; or any 3.3V LDO >=300mA in SOT-23-5 with the same pinout; clone C23380830 (Tech Public) also listed; original preferred
+U2,1,AVR 8-bit MCU 32KB TQFP-32,ATmega328P-AU,TQFP-32_7x7mm_P0.8mm,ATMEGA328P-AU,Microchip,C14877,16356,2.3218,1+,2.32,Essential,ok,"ATmega328P-AUR (C618816, reel); any ATmega328P TQFP-32 at 8 MHz-capable grade"
+Y1,1,8MHz crystal 3.2x2.5mm,8MHz,Crystal_SMD_3225-4Pin_3.2x2.5mm,XC32M4-8.000-F18LJDT,HCI,C2905353,16285,0.1906,5+,0.19,Essential,verify,load capacitance 18 pF inferred from the 'F18' suffix of the MPN; confirm on the datasheet
+BZ1,1,Active buzzer 4-8V 12mm THT,active 5V,Buzzer_12x9.5RM7.6,TMB12A05,Huaneng,C96093,78275,0.1950,5+,0.20,Optional,ok,any 12mm 3-5V active (self-oscillating) buzzer; or omit
+D3,1,Switching diode SOD-123,1N4148W,D_SOD-123,1N4148W,PANJIT,C304038,6343,0.0087,500+,0.01,Optional,verify,"listed under 'Other Suppliers' (lead time 3-5 business days), not LCSC stock; any SOD-123 1N4148W works"
+U3,1,"SI24R1 2.4GHz module (12x18mm, 8 half-holes)",,12x18mm module,n/a,n/a,owned by user,,,,,Essential,external,
+U4,1,DFPlayer Mini MP3 module,,"20.8x20.8mm, 2x8 pins",n/a,n/a,not looked up,,,,,Essential,unverified,check pin spacing and pin order against YOUR module before ordering PCBs
+DS1,1,"0.96in SSD1306 OLED, I2C, 4-pin",128x64,module,n/a,n/a,not looked up,,,,,Essential,unverified,check pin order (GND VCC SCL SDA vs VCC GND SDA SCL)
+LS1,1,Speaker 4 ohm 3 W,4R 3W,,n/a,n/a,not looked up,,,,,Essential,unverified,DFPlayer Mini internal amp is rated for 3 W into 3 ohm at 5 V; 4 ohm gives less. See docs/power-and-safety.md
+-,1,"microSD card (FAT32, up to 32 GB) with /MP3/0001..0014.mp3",,,n/a,n/a,not looked up,,,,,Essential,unverified,
+-,1,5V 2A USB charger + USB-C cable,5V 2A,,n/a,n/a,not looked up,,,,,Essential,unverified,

@@ -1,0 +1,19 @@
+Refs,Qty,Component,Value,Package,MPN,Manufacturer,LCSC,Stock 2026-10-29,Unit USD,Price tier,Line USD,Need,Status,Substitutes / notes
+BT1,10,CR2450 SMT battery holder,CR2450,CR2450_Holder_MY-2450-01,MY-2450-01,MYOUNG,C964845,5355,0.1883,5+,1.88,Essential,verify,"polarity of the two side pads is not stated in the drawing text: measure it, then fit JP1+JP2 or JP3+JP4; polarity set by JP1..JP4"
+C1 C2 C3 C4 C6,50,100nF 50V X7R 0805,100nF,C_0805_2012Metric,CL21B104KBCNNNC,Samsung,C1711,1693260,0.0139,20+,0.69,Essential,ok,any 100nF 0805 X7R >=16V (e.g. Yageo CC0805KRX7R9BB104)
+C5,10,10uF 25V X5R 0805,10uF,C_0805_2012Metric,CL21A106KAYNNNE,Samsung,C15850,1698440,0.0441,20+,0.44,Essential,ok,"any 10uF 0805 X5R >=16V; keep ceramic for the remote (leakage); bulk, 25V X5R: low leakage ceramic, never electrolytic/tantalum"
+C7,10,22uF 6.3V X5R 0805,22uF,C_0805_2012Metric,CL21A226MQQNNNE,Samsung,C5674,2820030,0.0445,10+,0.44,Essential,ok,"any 22uF 0805 X5R >=6.3V; for 3V use 10V rating to limit DC-bias loss; TX current pulses (12-16 mA); 6.3V X5R, derates at 3V"
+C8,10,10nF 50V X7R 0805,10nF,C_0805_2012Metric,CL21B103KBANNNC,Samsung,C1710,25550,0.0123,50+,0.12,Essential,ok,
+D1,10,Red LED 0805,red,LED_0805_2012Metric,KT-0805R,Hubei KENTO,C2295,87550,0.0106,50+,0.11,Essential,ok,any 0805 LED + re-check resistor
+J2,10,Pin header 2x3 2.54mm,ISP,PinHeader_2x03_P2.54mm_Vertical,PZ254V-12-06P-T,XFCN,C56153599,1000,0.0240,20+,0.24,Essential,ok,
+JP1 JP2 JP3 JP4,40,0 ohm jumper 0805,0R,R_0805_2012Metric,0805W8F0000T5E,UNI-ROYAL,C17477,2518900,0.0045,100+,0.18,Essential,ok,solder bridge for 0R; fit JP1+JP2 OR JP3+JP4
+R1,10,10k 1% 0805,10k,R_0805_2012Metric,0805W8F1002T5E,UNI-ROYAL,C17414,41045900,0.0034,100+,0.03,Essential,ok,any 1% 0805 resistor; reset pull-up
+R2,10,470k 1% 0805,470k,R_0805_2012Metric,0805W8F4703T5E,UNI-ROYAL,C17709,124100,0.0027,100+,0.03,Essential,ok,"any 1% 0805 resistor; external pull-up: a stuck button draws ~6 uA, internal pull-up would draw ~100 uA"
+R3,10,1k 1% 0805,1k,R_0805_2012Metric,0805W8F1001T5E,UNI-ROYAL,C17513,35589200,0.0035,100+,0.04,Essential,ok,any 1% 0805 resistor
+SW1,10,Tact switch 5.1x5.1mm SMD,CALL,SW_TS-1187A,TS-1187A-B-A-B,XKB Connection,C318884,875440,0.0208,20+,0.21,Essential,ok,any 5.1x5.1mm 4-pad SMD tact switch (footprint SW_TS-1187A)
+U1,10,AVR 8-bit MCU 32KB TQFP-32,ATmega328P-AU,TQFP-32_7x7mm_P0.8mm,ATMEGA328P-AU,Microchip,C14877,16356,2.3218,1+,23.22,Essential,ok,"ATmega328P-AUR (C618816, reel); any ATmega328P TQFP-32 at 8 MHz-capable grade"
+J3,10,Pin header 1x2 2.54mm,EXT BUTTON,PinHeader_1x02_P2.54mm_Vertical,PZ254V-11-02P,XFCN,C492401,887950,0.0180,50+,0.18,Optional,ok,wire to a big panel/arcade button
+J4,10,Pin header 1x2 2.54mm,2xAAA IN (+ / -),PinHeader_1x02_P2.54mm_Vertical,PZ254V-11-02P,XFCN,C492401,887950,0.0180,50+,0.18,Optional,ok,
+U2,10,"SI24R1 2.4GHz module (HC-24L01-M style, 12x18mm, 8 half-holes)",,12x18mm module,n/a,n/a,owned by user,,,,,Essential,external,any module with the same pinout: 3V3 GND CE CSN SCK MOSI MISO IRQ
+BT1,10,"CR2450 coin cell (or 2xAAA alkaline + holder, never both)",3V,CR2450,n/a,n/a,not looked up,,,,,Essential,unverified,"CR2032 is not recommended (lower capacity, higher internal resistance under pulses)"
+-,10,Enclosure with button window / 3D-printed case,,,n/a,n/a,not looked up,,,,,Essential,unverified,
