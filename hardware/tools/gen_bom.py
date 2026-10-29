@@ -45,7 +45,7 @@ EXTERNAL_REMOTE = [
 ]
 EXTERNAL_RECEIVER = [
     ("U3", 1, "SI24R1 2.4GHz module (12x18mm, 8 half-holes)", "", "12x18mm module", "n/a", "n/a", "owned by user", "", "", "", "", "Essential", "external", ""),
-    ("U4", 1, "DFPlayer Mini MP3 module", "", "20.8x20.8mm, 2x8 pins", "n/a", "n/a", "not looked up", "", "", "", "", "Essential", "unverified", "check pin spacing and pin order against YOUR module before ordering PCBs"),
+    ("U4", 1, "DFPlayer Mini MP3 module MP3-TF-16P (Robocraze SKU TIFEC0029, Rs 94 sale price incl. GST on 2026-10-29)", "3.2-5V", "21x21x10mm, 2x8 pins", "MP3-TF-16P", "generic", "n/a (Robocraze)", "", "", "", "", "Essential", "verify", "listing gives size and supply only; a buyer review says the board has NO pin labels: confirm pin order and row spacing on the real module before ordering PCBs; buy 2 spares"),
     ("DS1", 1, "0.96in SSD1306 OLED, I2C, 4-pin", "128x64", "module", "n/a", "n/a", "not looked up", "", "", "", "", "Essential", "unverified", "check pin order (GND VCC SCL SDA vs VCC GND SDA SCL)"),
     ("LS1", 1, "Speaker 4 ohm 3 W", "4R 3W", "", "n/a", "n/a", "not looked up", "", "", "", "", "Essential", "unverified", "DFPlayer Mini internal amp is rated for 3 W into 3 ohm at 5 V; 4 ohm gives less. See docs/power-and-safety.md"),
     ("-", 1, "microSD card (FAT32, up to 32 GB) with /MP3/0001..0014.mp3", "", "", "n/a", "n/a", "not looked up", "", "", "", "", "Essential", "unverified", ""),
