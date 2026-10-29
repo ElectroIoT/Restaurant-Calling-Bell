@@ -1,0 +1,12 @@
+build/
+*.hex
+*.elf
+*.bak
+*~
+__pycache__/
+fp-info-cache
+*-backups/
+*.kicad_prl
+.vscode/
+# scratch downloads (LCSC datasheets etc.)
+datasheets-lcsc/

@@ -1,0 +1,298 @@
+<title>SI24R1 Calling Bell</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: colour-coded blocks. Amber = button node, teal = receiver, violet = radio link, pink = audio. Pins/packets in mono tables. */
+:root{
+  --bg:#fbf8f3; --surface:#ffffff; --fg:#241f33; --muted:#6b6580; --line:#e6dfd2;
+  --amber:#f59e0b; --amber-bg:#fff3d6; --amber-fg:#8a5200;
+  --teal:#0ea5a4; --teal-bg:#d9f5f3; --teal-fg:#0b6463;
+  --violet:#7c3aed; --violet-bg:#ece4fd; --violet-fg:#5223a8;
+  --pink:#ec4899; --pink-bg:#fde1ee; --pink-fg:#a1205f;
+  --green:#16a34a; --green-bg:#dcf5e4; --green-fg:#12653a;
+  --red:#dc2626; --red-bg:#fde3e3; --red-fg:#9b1c1c;
+  --code:#f3eee4;
+  --display:'Bricolage Grotesque','Trebuchet MS',sans-serif;
+  --body:'DM Sans','Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#16131f; --surface:#211d2e; --fg:#f1edf9; --muted:#a39db8; --line:#35304a;
+  --amber-bg:#3a2a0b; --amber-fg:#fbbf4a; --teal-bg:#0c3333; --teal-fg:#5fe0dd;
+  --violet-bg:#2c1f50; --violet-fg:#b99bff; --pink-bg:#451632; --pink-fg:#ff8fc2;
+  --green-bg:#0f3320; --green-fg:#6fe39a; --red-bg:#471616; --red-fg:#ff9a9a; --code:#2a2540; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16131f; --surface:#211d2e; --fg:#f1edf9; --muted:#a39db8; --line:#35304a;
+  --amber-bg:#3a2a0b; --amber-fg:#fbbf4a; --teal-bg:#0c3333; --teal-fg:#5fe0dd;
+  --violet-bg:#2c1f50; --violet-fg:#b99bff; --pink-bg:#451632; --pink-fg:#ff8fc2;
+  --green-bg:#0f3320; --green-fg:#6fe39a; --red-bg:#471616; --red-fg:#ff9a9a; --code:#2a2540; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,6vw,3.4rem);font-weight:800}
+h2{font-size:1.7rem;font-weight:800;margin-bottom:6px}
+h3{font-size:1.15rem;font-weight:600;margin-bottom:8px}
+p{margin:0 0 12px;max-width:68ch}
+code,.mono{font-family:var(--mono);font-size:.86em}
+code{background:var(--code);padding:1px 6px;border-radius:5px}
+.hero{background:linear-gradient(120deg,var(--amber-bg),var(--violet-bg) 55%,var(--teal-bg));border-radius:20px;padding:32px;display:grid;gap:14px}
+.hero p{color:var(--muted);font-size:1.08rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-family:var(--mono);font-size:.78rem;padding:4px 10px;border-radius:99px;font-weight:600}
+.t-a{background:var(--amber-bg);color:var(--amber-fg)} .t-t{background:var(--teal-bg);color:var(--teal-fg)}
+.t-v{background:var(--violet-bg);color:var(--violet-fg)} .t-p{background:var(--pink-bg);color:var(--pink-fg)}
+.t-g{background:var(--green-bg);color:var(--green-fg)} .t-r{background:var(--red-bg);color:var(--red-fg)}
+section{margin-top:56px}
+.band{border-radius:16px;padding:24px;margin-top:18px}
+.b-a{background:var(--amber-bg)} .b-t{background:var(--teal-bg)} .b-v{background:var(--violet-bg)} .b-p{background:var(--pink-bg)}
+.sec-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.dot{width:14px;height:14px;border-radius:50%}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+.card ul,.band ul{margin:0;padding-left:20px}
+.card li,.band li{margin-bottom:5px}
+.scroll{overflow-x:auto;border-radius:12px;border:1px solid var(--line);background:var(--surface);margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--code);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td:first-child{font-family:var(--mono);font-weight:600;white-space:nowrap}
+.flow{display:grid;gap:10px;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;margin-top:16px}
+.node{border-radius:14px;padding:16px;min-width:0}
+.node h3{margin-bottom:6px}
+.node p{font-size:.9rem;margin:0 0 6px;color:var(--fg)}
+.arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);font-size:.74rem;color:var(--violet-fg);text-align:center;gap:2px}
+.arrow b{font-size:1.4rem;line-height:1}
+@media(max-width:760px){.flow{grid-template-columns:1fr}.arrow b{transform:rotate(90deg)}}
+.bits{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.byte{font-family:var(--mono);font-size:.8rem;border-radius:8px;padding:8px 10px;text-align:center;min-width:76px}
+.byte small{display:block;font-size:.68rem;opacity:.8}
+.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 52px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:12px;top:11px;width:28px;height:28px;border-radius:50%;background:var(--violet);color:#fff;font-family:var(--mono);font-weight:600;display:grid;place-items:center;font-size:.85rem}
+.note{border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.95rem}
+.n-w{background:var(--red-bg);color:var(--red-fg)} .n-i{background:var(--green-bg);color:var(--green-fg)}
+.pre{font-family:var(--mono);font-size:.82rem;background:var(--code);border-radius:12px;padding:14px;overflow-x:auto;white-space:pre;line-height:1.5;margin:12px 0}
+footer{margin-top:56px;color:var(--muted);font-size:.9rem}
+</style>
+
+<div class="wrap">
+<div class="hero">
+  <div class="tags"><span class="tag t-a">ATtiny85 button</span><span class="tag t-t">STM32C031F6P6 receiver</span><span class="tag t-v">SI24R1 2.4 GHz</span><span class="tag t-p">PAM8403 audio</span></div>
+  <h1>SI24R1 Calling Bell</h1>
+  <p>Press a coin-cell button and the receiver plays that button's tune, shows its number and sends back a "call received" acknowledgement. Built for restaurant tables, home or elderly calls, and shop doorbells.</p>
+</div>
+
+<section>
+  <h2>How it works</h2>
+  <p>Many button nodes talk to one receiver. Every press is one short radio packet. The receiver replies inside the radio's ACK, so the button can show the call was heard.</p>
+  <div class="flow">
+    <div class="node b-a"><h3>Button node</h3><p>ATtiny85 + SI24R1 + CR2032</p><p>Sleeps at under 2 µA. Wakes on press, sends ID, waits for ACK, blinks LED, sleeps.</p></div>
+    <div class="arrow"><span>call packet</span><b>→</b><b>←</b><span>ACK status</span></div>
+    <div class="node b-v"><h3>2.4 GHz link</h3><p>Channel 76, 250 kbps</p><p>Auto-ACK with payload, 5-byte address, retries with random delay.</p></div>
+    <div class="arrow"><span>UART (later)</span><b>→</b><span>ESP32 / phone</span></div>
+    <div class="node b-t"><h3>Receiver</h3><p>STM32C031F6P6 + SI24R1</p><p>Queues calls, shows number, plays tune or voice, drives a relay output.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="dot" style="background:var(--amber)"></span><h2>Button side</h2><span class="tag t-a">transmitter</span></div>
+  <p>One small board per table or room. Priority is battery life and a tiny size.</p>
+  <div class="grid">
+    <div class="card"><h3>Parts</h3><ul>
+      <li>ATtiny85-20SU (SOIC-8) or DIP-8 for testing</li>
+      <li>SI24R1 module (nRF24L01+ footprint)</li>
+      <li>CR2032 holder, or 2×AAA for longer life</li>
+      <li>1 tactile button, 1 LED + 1 kΩ</li>
+      <li>10 µF + 100 nF across the radio supply</li>
+      <li>Optional: 3.3 V LDO if using 2×AAA</li></ul></div>
+    <div class="card"><h3>Why ATtiny85</h3><ul>
+      <li>USI port runs the SPI the radio needs</li>
+      <li>Power-down sleep with pin-change wake</li>
+      <li>8 KB flash is plenty for this firmware</li>
+      <li>ATtiny13 was ruled out: 1 KB flash, 64 B RAM, too few pins</li></ul></div>
+    <div class="card"><h3>Behaviour</h3><ul>
+      <li>Press wakes the chip, 20 ms debounce</li>
+      <li>Short press = normal call, long press (1 s) = "bill please", double press = urgent</li>
+      <li>Sends up to 5 tries with a random 5–40 ms gap</li>
+      <li>ACK received: LED blinks 2×. No ACK: LED stays solid for 1 s</li>
+      <li>3 s lockout against repeat presses</li></ul></div>
+  </div>
+
+  <h3 style="margin-top:22px">Pin map (ATtiny85)</h3>
+  <div class="scroll"><table>
+    <tr><th>Pin</th><th>Function</th><th>Connects to</th></tr>
+    <tr><td>PB0</td><td>MOSI (USI DO)</td><td>SI24R1 MOSI</td></tr>
+    <tr><td>PB1</td><td>MISO (USI DI)</td><td>SI24R1 MISO</td></tr>
+    <tr><td>PB2</td><td>SCK (USI clock)</td><td>SI24R1 SCK</td></tr>
+    <tr><td>PB3</td><td>CSN</td><td>SI24R1 CSN</td></tr>
+    <tr><td>PB4</td><td>Button + LED (shared)</td><td>Button to GND; LED + 1 kΩ to GND. Pin is an input with pull-up while sleeping, output high to light the LED</td></tr>
+    <tr><td>PB5</td><td>RESET</td><td>Left as reset so the chip stays programmable</td></tr>
+    <tr><td>SI24R1 CE</td><td>Tied to VCC</td><td>The radio powers up only while sending, so CE high costs nothing in sleep</td></tr>
+    <tr><td>SI24R1 IRQ</td><td>Not used</td><td>Poll the STATUS register for TX_DS / MAX_RT instead</td></tr>
+  </table></div>
+
+  <h3>Power budget</h3>
+  <div class="scroll"><table>
+    <tr><th>State</th><th>Current</th><th>Time</th></tr>
+    <tr><td>Deep sleep (MCU + radio off)</td><td>about 1–2 µA</td><td>almost always</td></tr>
+    <tr><td>Radio TX burst</td><td>about 10–12 mA</td><td>about 5 ms per try</td></tr>
+    <tr><td>MCU awake, LED blink</td><td>about 6 mA</td><td>about 400 ms per press</td></tr>
+  </table></div>
+  <p>A CR2032 (about 220 mAh) at 50 presses a day lasts around 2 years, limited mostly by the battery's own self-discharge. Estimate only; measure on the real board.</p>
+  <h3 style="margin-top:22px">Battery options (fit one, never both)</h3>
+  <p>Both cells are about 3 V, so the radio and ATtiny85 run straight from them with no regulator. The board carries pads for a CR2032 holder and a 2×AAA holder; solder only one.</p>
+  <div class="scroll"><table>
+    <tr><th>Option</th><th>Life (50 presses/day)</th><th>Use when</th></tr>
+    <tr><td>CR2032</td><td>about 2–3 years</td><td>Smallest node, stuck under a table or on a stand</td></tr>
+    <tr><td>2×AAA</td><td>8+ years</td><td>Easy swaps by staff, longer life, steadier voltage</td></tr>
+  </table></div>
+  <ul>
+    <li>Voltage window: 3.2 V fresh alkaline to about 2.0 V empty; the radio needs at least 1.9 V and the brown-out is set to 1.8 V. Fresh lithium AAAs sit near 3.6 V, the radio's limit, so prefer alkaline.</li>
+    <li>Reverse-polarity protection: a P-channel MOSFET, not a diode, so a 0.3 V diode drop does not waste cell range.</li>
+    <li>The node measures its own supply against the internal 1.1 V reference and sends it as the battery byte. The low-battery flag sets at 2.3 V.</li>
+    <li>Sleep current decides battery life, so the firmware turns brown-out detection off during sleep and powers the radio down after every press.</li>
+  </ul>
+  <div class="note n-w">Brown-out matters on a coin cell. Fuse BOD to 1.8 V and keep the 10 µF capacitor right at the radio, or the radio resets mid-packet when the cell is cold or old.</div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="dot" style="background:var(--teal)"></span><h2>Receiver side</h2><span class="tag t-t">central unit</span></div>
+  <p>One unit near the kitchen, counter or reception. It listens all the time, so it runs on 5 V mains.</p>
+  <div class="grid">
+    <div class="card"><h3>Parts</h3><ul>
+      <li>STM32C031F6P6 (TSSOP20) on a mini dev board</li>
+      <li>SI24R1 module + 10 µF at its supply</li>
+      <li>PAM8403 amplifier board + 8 Ω 3 W speaker</li>
+      <li>TM1637 4-digit display for the table number</li>
+      <li>"Served" push button, status LED</li>
+      <li>5 V 1 A adapter + 3.3 V LDO for the radio</li>
+      <li>Optional: DFPlayer Mini, relay, ESP32</li></ul></div>
+    <div class="card"><h3>Why STM32C031</h3><ul>
+      <li>48 MHz Cortex-M0+, 32 KB flash, 12 KB RAM</li>
+      <li>Hardware SPI, UARTs and timers cover radio, voice and PWM audio with no sharing</li>
+      <li>Enough room for a 32-entry call queue and a melody table</li>
+      <li>STM8S003F3 also works here if you want the smaller chip: drop the queue to 8 entries and skip voice</li></ul></div>
+    <div class="card"><h3>Behaviour</h3><ul>
+      <li>Always in RX with auto-ACK</li>
+      <li>New call: ACK status "queued", play that node's tune, show number</li>
+      <li>Same node again within 3 s: ignored</li>
+      <li>Repeat chime every 30 s until served</li>
+      <li>"Served" button clears the oldest call; next call shows</li>
+      <li>Low-battery flag from a node lights a warning LED</li></ul></div>
+  </div>
+
+  <h3 style="margin-top:22px">Pin map (suggested, STM32C031F6P6)</h3>
+  <div class="scroll"><table>
+    <tr><th>Pin</th><th>Function</th><th>Connects to</th></tr>
+    <tr><td>PA5 / PA6 / PA7</td><td>SPI1 SCK / MISO / MOSI</td><td>SI24R1</td></tr>
+    <tr><td>PA4</td><td>GPIO out</td><td>SI24R1 CSN</td></tr>
+    <tr><td>PA3</td><td>GPIO out</td><td>SI24R1 CE</td></tr>
+    <tr><td>PA2</td><td>EXTI falling</td><td>SI24R1 IRQ (wakes the receive handler)</td></tr>
+    <tr><td>PA0 or PA1</td><td>TIMx PWM, 20 kHz+</td><td>RC filter then PAM8403 input</td></tr>
+    <tr><td>PB6</td><td>GPIO out</td><td>PAM8403 mute / shutdown transistor</td></tr>
+    <tr><td>PA9 / PA10</td><td>USART1 TX / RX</td><td>DFPlayer Mini now, ESP32 later</td></tr>
+    <tr><td>PB7 / PB8</td><td>GPIO</td><td>TM1637 CLK / DIO</td></tr>
+    <tr><td>PA13 / PA14</td><td>SWDIO / SWCLK</td><td>Programmer</td></tr>
+    <tr><td>PA8 / PF0</td><td>GPIO in / out</td><td>"Served" button / status LED</td></tr>
+  </table></div>
+  <div class="note n-w">Pin names are a starting plan. The TSSOP20 package does not break out every port pin, so confirm each one in CubeMX against the chip's pinout and alternate-function table before drawing the PCB.</div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="dot" style="background:var(--pink)"></span><h2>Sound and amplifier</h2><span class="tag t-p">PAM8403</span></div>
+  <div class="band b-p">
+    <div class="pre">STM32 PWM pin ─ 1 kΩ ─┬─ 1 µF ─ PAM8403 L-in
+                      │
+                    10 nF
+                      │
+                     GND
+
+PAM8403 L+ ──► speaker (+)      PAM8403 L− ──► speaker (−)
+Never connect a speaker terminal to GND (bridge-tied output).
+5 V rail: 100 µF + 100 nF at the amp.   Unused channel input: 1 µF to GND.</div>
+    <ul>
+      <li><b>Tones and melodies:</b> a note table plays through PWM. Each node ID gets its own tune; urgent calls use a fast beep pattern.</li>
+      <li><b>Short samples:</b> the C031 has no DAC, so PWM plus DMA plays about 2–3 s of 8-bit audio from flash.</li>
+      <li><b>Voice ("Table five calling"):</b> a DFPlayer Mini on USART1 plays numbered files from a microSD card. Wire its DAC output to the PAM8403 for more volume.</li>
+      <li><b>No hiss between calls:</b> pull the PAM8403 mute pin low through PB6 when idle.</li>
+      <li>Speaker: 8 Ω, 2–3 W, 40–57 mm, in a small enclosure.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><span class="dot" style="background:var(--violet)"></span><h2>Radio settings and packets</h2><span class="tag t-v">shared by both sides</span></div>
+  <div class="scroll"><table>
+    <tr><th>Setting</th><th>Value</th><th>Reason</th></tr>
+    <tr><td>Channel</td><td>76 (2476 MHz)</td><td>Above most Wi-Fi traffic</td></tr>
+    <tr><td>Data rate</td><td>250 kbps</td><td>Longest range, lowest error rate</td></tr>
+    <tr><td>Address</td><td>5 bytes, one shared pipe</td><td>Node ID travels in the payload</td></tr>
+    <tr><td>Auto-ACK + ACK payload</td><td>On, dynamic payload length</td><td>Gives the two-way "received" reply</td></tr>
+    <tr><td>Retries</td><td>15 × 750 µs in hardware, plus 5 software tries</td><td>Handles collisions between two buttons</td></tr>
+    <tr><td>TX power</td><td>0 dBm</td><td>Enough for a building floor</td></tr>
+  </table></div>
+
+  <h3>Button to receiver (6 bytes)</h3>
+  <div class="bits">
+    <div class="byte t-a">node_id<small>1 B</small></div>
+    <div class="byte t-a">type<small>1 B</small></div>
+    <div class="byte t-a">seq<small>1 B</small></div>
+    <div class="byte t-a">battery<small>1 B</small></div>
+    <div class="byte t-a">flags<small>1 B</small></div>
+    <div class="byte t-v">crc8<small>1 B</small></div>
+  </div>
+  <p><b>type:</b> 0 normal, 1 bill, 2 urgent. <b>battery:</b> millivolts ÷ 20. <b>seq:</b> increments each press, so the receiver ignores duplicate retries.</p>
+
+  <h3>Receiver to button, inside the ACK (2 bytes)</h3>
+  <div class="bits">
+    <div class="byte t-t">status<small>1 B</small></div>
+    <div class="byte t-v">crc8<small>1 B</small></div>
+  </div>
+  <p><b>status:</b> 0 received, 1 queued behind other calls, 2 served, 3 queue full.</p>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Firmware states</h2></div>
+  <div class="grid">
+    <div class="card"><span class="tag t-a">Button node</span><div class="pre" style="margin-top:10px">SLEEP ─press─► DEBOUNCE ─► BUILD PACKET
+   ▲                                  │
+   │                              TX + wait ACK
+   │                              ┌────┴────┐
+   └── LED 2× ◄── ok         fail ─► retry ≤5 ─► LED solid</div></div>
+    <div class="card"><span class="tag t-t">Receiver</span><div class="pre" style="margin-top:10px">RX ─packet─► CRC ok? ─► new seq? ─► queue
+ ▲                                      │
+ │                          set ACK payload, play tune,
+ │                          show number, start 30 s repeat
+ └──── "Served" press ◄─── ALERTING ───┘</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Build order</h2></div>
+  <p>Each step proves one thing before the next is added.</p>
+  <ol class="steps">
+    <li><b>Radio link.</b> Arduino or Nano sketch on both ends. Send a counter, read it back through the ACK payload. This confirms both SI24R1 modules and your power filtering.</li>
+    <li><b>Receiver on STM32C031.</b> SPI1 driver, receive a packet, print the node ID on a serial port.</li>
+    <li><b>Button on ATtiny85.</b> USI SPI driver, one press sends one packet, then sleep. Measure sleep current with a multimeter.</li>
+    <li><b>ACK round trip.</b> Receiver replies "received"; the button LED blinks.</li>
+    <li><b>Audio.</b> PWM tone through the PAM8403, then per-node melodies, then the mute pin.</li>
+    <li><b>Display, queue and Served button.</b> TM1637 shows the table number, repeat chime every 30 s.</li>
+    <li><b>Range and battery test.</b> Walk through walls, then log a week of presses.</li>
+    <li><b>Extras.</b> DFPlayer voice, relay output, ESP32 alerts to phone or to RestoProERP.</li>
+  </ol>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Risks to check early</h2></div>
+  <div class="grid">
+    <div class="card"><span class="tag t-r">Power</span><p style="margin-top:10px">Radio resets on a weak coin cell. Fix with the 10 µF capacitor and 1.8 V brown-out.</p></div>
+    <div class="card"><span class="tag t-r">Noise</span><p style="margin-top:10px">PAM8403 switching noise can hurt reception. Give the radio its own 3.3 V regulator and keep it away from the speaker wires.</p></div>
+    <div class="card"><span class="tag t-r">Clones</span><p style="margin-top:10px">Some SI24R1 modules differ slightly from the nRF24L01+ on register defaults. Write every register explicitly instead of relying on reset values.</p></div>
+    <div class="card"><span class="tag t-g">Collision</span><p style="margin-top:10px">Two simultaneous presses are handled by the random retry delay. Test with 5 buttons pressed together.</p></div>
+  </div>
+</section>
+
+<footer>Plan v1. Pin choices and current figures are estimates until tested on hardware.</footer>
+</div>
